@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Banking Application</h1>
+
+        <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('homeSection')">Home</a></li>
+                <li><a href="#" onclick="showSection('createAccountForm')">Create Account</a></li>
+                <li><a href="#" onclick="showSection('depositForm')">Deposit</a></li>
+                <li><a href="#" onclick="showSection('withdrawForm')">Withdraw</a></li>
+                <li><a href="#" onclick="showSection('allData')">Account Info</a></li>
+            </ul>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="homeSection" class="section-container">
+            <h2 class="img">Welcome to Your Bank</h2>
+            <p>Your finances, simplified. Manage your account, deposit, withdraw, and view all data at the click of a button.</p>
+            <div class="cta-btn-container">
+                <button class="cta-btn" onclick="showSection('createAccountForm')">Create Account</button>
+            </div>
+        </section>
+        
+
+        <!-- Create Account Form -->
+        <div id="createAccountForm" class="form-container">
+            <h2>Create Account</h2>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <button onclick="createAccount()">Create Account</button>
+            <p id="createAccountMessage"></p>
+        </div>
+
+        <!-- Deposit Amount Form -->
+        <div id="depositForm" class="form-container">
+            <h2>Deposit Amount</h2>
+            <input type="number" id="depositAmount" placeholder="Amount to Deposit" />
+            <input type="password" id="depositPassword" placeholder="Password" />
+            <button onclick="depositAmount()">Deposit</button>
+            <p id="depositMessage"></p>
+        </div>
+
+        <!-- Withdraw Amount Form -->
+        <div id="withdrawForm" class="form-container">
+            <h2>Withdraw Amount</h2>
+            <input type="number" id="withdrawAmount" placeholder="Amount to Withdraw" />
+            <input type="password" id="withdrawPassword" placeholder="Password" />
+            <button onclick="withdrawAmount()">Withdraw</button>
+            <p id="withdrawMessage"></p>
+        </div>
+
+        <!-- All Data -->
+        <!-- All Data (Account Information) -->
+<div id="allData" class="form-container">
+    <h2>All Account Data</h2>
+    <div id="accountDetails">
+        <!-- Account details will be dynamically inserted here -->
+        <div class="no-accounts">No accounts found. Please create an account first.</div>
+    </div>
+</div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Banking Application. All rights reserved.</p>
+    </footer>
+
+   <style>
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #6a6b6e;
+    color: #333;
+}
+
+.container {
+    width: 85%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f0f0;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+h1 {
+    text-align: center;
+    color: #0073e6;
+    font-size: 42px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #070606;
+    padding: 15px 0;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    color: #ff9800;
+}
+
+/* Home Section */
+#homeSection {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#homeSection h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#homeSection p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #666;
+}
+
+.cta-btn-container {
+    text-align: center;
+}
+
+.cta-btn {
+    background-color: #0073e6;
+    color: white;
+    padding: 14px 40px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.cta-btn:hover {
+    background-color: #005bb5;
+}
+
+/* Form Container */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: none;  /* Initially hide all sections */
+}
+
+.form-container h2 {
+    font-size: 24px;
+    color: #0073e6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+    border-color: #0073e6;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+p {
+    color: #555;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Slideshow Section (Home) */
+.img {
+    width: 100%;
+    height: 350px; 
+    background-size: cover;
+    background-position: center;
+    animation: slide 10s infinite;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Keyframes for the slideshow effect */
+@keyframes slide {
+    0% {
+        background-image: url('./img/bank.jpeg');
+    }
+    33% {
+        background-image: url('./img/deposit.jpeg');
+    }
+    66% {
+        background-image: url('./img/create.jpeg');
+    }
+    100% {
+        background-image: url('./img/withdraw.jpeg');
+    }
+}
+
+/* Account Info Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #0073e6;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+#accountRow td {
+    color: #333;
+}
+</style> 
+<script>
+let accounts = [];  // This will store all accounts
+
+// Show appropriate form when navigation links are clicked
+document.getElementById('createAccountLink').addEventListener('click', () => showForm('createAccountForm'));
+document.getElementById('depositLink').addEventListener('click', () => showForm('depositForm'));
+document.getElementById('withdrawLink').addEventListener('click', () => showForm('withdrawForm'));
+document.getElementById('dataLink').addEventListener('click', () => {
+    showForm('allData');
+    displayAllData(); // Make sure this function is called to update the data display
+});
+
+// Show the appropriate form
+function showForm(formId) {
+    const forms = document.querySelectorAll('.form-container');
+    forms.forEach(form => form.style.display = 'none');
+    document.getElementById(formId).style.display = 'block';
+}
+
+// Create account function
+function createAccount() {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (username && email && password) {
+        const newAccount = {
+            username,
+            email,
+            password,
+            balance: 0,
+            transactions: []
+        };
+        accounts.push(newAccount);
+        document.getElementById('createAccountMessage').textContent = 'Account created successfully!';
+        showForm('depositForm');  // Go to deposit form after account creation
+    } else {
+        document.getElementById('createAccountMessage').textContent = 'Please fill all fields!';
+    }
+}
+
+// Deposit function
+function depositAmount() {
+    const amount = parseFloat(document.getElementById('depositAmount').value);
+    const password = document.getElementById('depositPassword').value;
+    const username = document.getElementById('username').value;
+
+    // Find the account by username
+    const account = accounts.find(acc => acc.username === username);
+
+    if (account && password === account.password) {
+        if (amount > 0) {
+            account.balance += amount;
+            account.transactions.push({ type: 'deposit', amount });
+            document.getElementById('depositMessage').textContent = `Deposited $${amount}. New balance: $${account.balance}.`;
+            displayAllData();  // Update the account details display after deposit
+        } else {
+            document.getElementById('depositMessage').textContent = 'Please enter a valid amount!';
+        }
+    } else {
+        document.getElementById('depositMessage').textContent = 'Incorrect username or password!';
+    }
+}
+
+// Withdraw function
+function withdrawAmount() {
+    const amount = parseFloat(document.getElementById('withdrawAmount').value);
+    const password = document.getElementById('withdrawPassword').value;
+    const username = document.getElementById('username').value;
+
+    // Find the account by username
+    const account = accounts.find(acc => acc.username === username);
+
+    if (account && password === account.password) {
+        if (amount > 0 && amount <= account.balance) {
+            account.balance -= amount;
+            account.transactions.push({ type: 'withdraw', amount });
+            document.getElementById('withdrawMessage').textContent = `Withdrew $${amount}. New balance: $${account.balance}.`;
+            displayAllData();  // Update the account details display after withdrawal
+        } else {
+            document.getElementById('withdrawMessage').textContent = 'Insufficient funds or invalid amount!';
+        }
+    } else {
+        document.getElementById('withdrawMessage').textContent = 'Incorrect username or password!';
+    }
+}
+
+// Display all accounts and their data
+function displayAllData() {
+    if (accounts.length > 0) {
+        let accountDetailsHTML = '';
+        
+        // Iterate through all accounts and display their data
+        accounts.forEach(account => {
+            accountDetailsHTML += `
+                <div>
+                    <h3>Account: ${account.username}</h3>
+                    <p><strong>Email:</strong> ${account.email}</p>
+                    <p><strong>Balance:</strong> $${account.balance}</p>
+                    <p><strong>Transactions:</strong></p>
+                    <ul>
+                        ${account.transactions.map(tx => `<li>${tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}: $${tx.amount}</li>`).join('')}
+                    </ul>
+                    <hr>
+                </div>
+            `;
+        });
+        
+        document.getElementById('accountDetails').innerHTML = accountDetailsHTML;
+    } else {
+        document.getElementById('accountDetails').textContent = 'No accounts found. Please create an account first.';
+    }
+}
+
+// Show appropriate section when a link is clicked
+function showSection(sectionId) {
+    // Hide all sections
+    var sections = document.querySelectorAll('.section-container, .form-container');
+    sections.forEach(function(section) {
+        section.style.display = 'none';
+    });
+
+    // Show the selected section
+    var sectionToShow = document.getElementById(sectionId);
+    if (sectionToShow) {
+        sectionToShow.style.display = 'block';
+    }
+}
+
+// Initially show the home section
+window.onload = function() {
+    showSection('homeSection');
+};
+</script>
+</body>
+</html>
